@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
-# Command to make an nginx server listen on port 80
-apt-get -y update
-apt-get -y install nginx
-ufw allow 'Nginx HTTP'
-sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
-service nginx start
+# Using your debugging skills, find out what's keeping your Ubuntu container's
+# Nginx installation from listening on port 80. Feel free to install whatever
+# tool you need, start and destroy as many containers as you need to debug the
+# issue. Then, write a Bash script with the minimum number of commands to
+# automate your fix.
+
+sudo sed -i "s/listen 8080 default_server;/listen 80 default_server;/" /etc/nginx/sites-enabled/default
+sudo sed -i "s/listen \[\:\:\]\:8080 default_server ipv6only=on;/listen \[\:\:\]\:80 default_server ipv6only=on;/" /etc/nginx/sites-enabled/default
+sudo service nginx restart
